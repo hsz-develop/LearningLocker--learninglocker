@@ -2,7 +2,7 @@
 
 use Locker\Repository\User\UserRepository as UserRepo;
 use Locker\Repository\Lrs\Repository as LrsRepo;
-use Locker\Repository\Client\ClientRepository as ClientRepo; 
+use Locker\Repository\Client\Repository as ClientRepo; 
 
 class ClientController extends BaseController {
 
@@ -28,8 +28,10 @@ class ClientController extends BaseController {
   public function manage($lrs_id) {
     $opts = ['user' => \Auth::user()];
     $lrs = $this->lrs->show($lrs_id, $opts);
-    $lrs_list = $this->lrs->index($opts); 
-	  $clients = \Client::where('lrs_id', $lrs->id)->get();
+    $lrs_list = $this->lrs->index($opts);
+	  $clients = $this->client->index([
+      'lrs_id' => $lrs->_id
+    ]);
     return View::make('partials.client.manage', [
       'clients' => $clients,
       'lrs' => $lrs,
@@ -46,8 +48,10 @@ class ClientController extends BaseController {
   public function edit($lrs_id, $id) {
     $opts = ['user' => \Auth::user()];
     $lrs = $this->lrs->show($lrs_id, $opts);
-    $lrs_list = $this->lrs->index($opts); 
-	  $client = $this->client->find($id);
+    $lrs_list = $this->lrs->index($opts);
+    $client = $this->client->show([
+      'lrs_id' => $lrs->_id
+    ]);
 	 	return View::make('partials.client.edit', [
       'client' => $client,
       'lrs' => $lrs,
@@ -63,9 +67,9 @@ class ClientController extends BaseController {
   public function create($lrs_id) {
     $opts = ['user' => \Auth::user()];
     $lrs = $this->lrs->show($lrs_id, $opts);
-	  $data = ['lrs_id' => $lrs->id];
+	  $opts = ['lrs_id' => $lrs->id];
 	
-    if ($this->client->create($data)) {
+    if ($this->client->store([], $opts)) {
       $message_type = 'success';
       $message = trans('lrs.client.created_sucecss');
     } else {
@@ -83,7 +87,9 @@ class ClientController extends BaseController {
    * @return View
    */
   public function update($lrs_id, $id){
-    if ($this->client->update($id, Input::all())) {
+    if ($this->client->update($id, Input::all(), [
+      'lrs_id' => $lrs_id
+    ])) {
       $redirect_url = '/lrs/'.$lrs_id.'/client/manage#'.$id;
       return Redirect::to($redirect_url)->with('success', trans('lrs.client.updated'));
     }
@@ -100,7 +106,9 @@ class ClientController extends BaseController {
    * @return View
    */
   public function destroy($lrs_id, $id){
-	  if ($this->client->delete($id)) {
+	  if ($this->client->destroy($id, [
+      'lrs_id' => $lrs_id
+    ])) {
       $message_type = 'success';
       $message = trans('lrs.client.delete_client_success');
     } else {

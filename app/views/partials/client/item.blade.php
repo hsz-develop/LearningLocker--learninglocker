@@ -16,9 +16,7 @@
 		
 	} else if (array_key_exists('account', $client->authority)){
 		$authorityIdentifier = Lang::get('lrs.client.authority.account');
-		$authorityHTML = '
-			<b>'.Lang::get('lrs.client.authority.accountname').':</b> '.$client->authority['account']['name'].'<br/>
-			<b>'.Lang::get('lrs.client.authority.accounthomepage').':</b> '.$client->authority['account']['homePage']
+		$authorityHTML = $client->authority['account']['homePage'].'/'.$client->authority['account']['name']
 		;
 			
 	} else  {
@@ -44,44 +42,13 @@
     	</h3>
   </div>
   <div class="panel-body">
-  	<h4>
-  		Authority
-  	</h4>
     <table class="table table-striped table-bordered table-xs-rows break-words">        
-        <tr>
-          <th scope="row">{{Lang::get('site.name')}}</th>
-          <td>{{ $client->authority['name'] }}</td>
-        </tr>
-        <tr>
-          <th scope="row">{{$authorityIdentifier}}</th>
-          <td>{{ $authorityHTML }}</td>
-        </tr>
-	</table>
-  	<h4> 		
-  		<div class="pull-left" >Credentials </div>
-    	&nbsp;
-    	<div class="pull-right hidden" style="margin-top: -6px;">
-			<a href="{{ URL() }}/lrs/{{ $lrs->_id }}/client/{{ $client->_id }}/refreshcredentials" class="btn btn-default btn-sm pull-right" title="{{ Lang::get('lrs.endpoint.new_key_secret') }}">
-				<i class="icon-refresh"></i><span class="hidden-xs"> {{ Lang::get('lrs.endpoint.new_key_secret') }}</span>
-			</a>
-		</div>
-	</h4>
-    <table class="table table-striped table-bordered table-xs-rows break-words">        
-        <tr>
-          <th scope="row">{{Lang::get('site.username')}}</th>
-          <td>{{ $client->api['basic_key'] }}</td>
-        </tr>
-        <tr>
-          <th scope="row">{{Lang::get('site.password')}}</th>
-          <td>{{ $client->api['basic_secret'] }}</td>
-        </tr>
-	</table>
-	<h4>Other information</h4>
-    <table class="table table-striped table-bordered table-xs-rows break-words">        
-        <tr>
-          <th scope="row">{{Lang::get('site.description')}}</th>
-          <td>{{ $client->description }}</td>
-        </tr>
-	</table>
+      <tr>
+        <td>{{ $client->authority['name'] }}</td>
+        <td>{{$authorityIdentifier}}: {{ $authorityHTML }}</td>
+        <td>{{ $client->username }}</td>
+        <td>{{ $client->password }}</td>
+      </tr>
+	  </table>
   </div>
 </div>
