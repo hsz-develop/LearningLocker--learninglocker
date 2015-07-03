@@ -22,6 +22,7 @@ if [ "${DEVELOP}" = "${TRAVIS_BRANCH}" ]; then
   npm install > /dev/null
   grunt --bail --config="testing.config.json" > /dev/null
 
+  # Change
   # Stops the server.
   ps aux | grep [p]hp | awk '{print $2}'
   ps aux | grep [p]hp | awk '{print $2}' | xargs kill
