@@ -10,6 +10,12 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::group(['prefix' => 'api/v2'], function () {
+  include('lockr/report/routes.php');
+  include('lockr/client/routes.php');
+  include('lockr/export/routes.php');
+  include('lockr/statement/routes.php');
+});
 
 App::singleton('oauth2', function() {
     $storage = new OAuth2\Storage\Mongo(App::make('db')->getMongoDB());

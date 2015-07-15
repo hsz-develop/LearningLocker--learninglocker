@@ -40,7 +40,7 @@ return array(
   | ahead and set this to a sensible default for you out of the box.
   |
   */
- 
+
   'timezone' => 'UTC',
 
   /*
@@ -117,8 +117,12 @@ return array(
     'Barryvdh\Cors\CorsServiceProvider',
     'JsLocalization\JsLocalizationServiceProvider',
     'locker\RequestServiceProvider',
-    'Philo\Translate\TranslateServiceProvider'
-
+    'Philo\Translate\TranslateServiceProvider',
+    'Lockr\Report\ServiceProvider',
+    'Lockr\Client\ServiceProvider',
+    'Lockr\Export\ServiceProvider',
+    'Lockr\Statement\ServiceProvider',
+    'Lockr\Store\ServiceProvider'
   ),
 
   /*
