@@ -8,7 +8,7 @@ return array(
       'port'     => 27017,
       'username' => '',
       'password' => '',
-      'database' => 'll_staging'
+      'database' => 'll'
     )
   )
 );
